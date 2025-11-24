@@ -9,7 +9,7 @@ dependencies = [
     "httpx>=0.28.1,<0.29.0",
     "itsdangerous>=2.2.0,<3.0",
 ]
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 
 description = "A Python library that helps implement the solver API in PSP"
 readme = "README.md"
