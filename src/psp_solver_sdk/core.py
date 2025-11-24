@@ -4,6 +4,8 @@ from dataclasses import dataclass
 logger = logging.getLogger(__name__)
 
 
-@dataclass
-class SolverApi:
+class SolverWrapper:
     config: SolverConfig
+
+    def __init__(config: SolverConfig):
+        self.config = config
