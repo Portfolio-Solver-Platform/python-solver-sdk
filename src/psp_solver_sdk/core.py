@@ -1,7 +1,9 @@
 import logging
-from .config import SolverConfig
+from config import SolverConfig
 
 logger = logging.getLogger(__name__)
+
+config = SolverConfig()
 
 
 class SolverWrapper:

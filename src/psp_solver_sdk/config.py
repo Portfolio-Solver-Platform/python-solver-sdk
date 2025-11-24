@@ -1,23 +1,36 @@
-import os
-from dataclasses import dataclass
+from pydantic import Field, AliasChoices
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import BaseModel
 
 
-@dataclass
-class SolverConfig:
-    class CPU:
-        limit: int = os.getenv("CPU_LIMIT")
+class CpuConfig(BaseSettings):
+    model_config = SettingsConfigDict(env_prefix="CPU_")
 
-    class Queue:
-        request_timeout: tuple[int, int] = (1, 5)
+    limit: int = Field(gt=0)
 
-        class In:
-            name: str = os.getenv("QUEUE_IN_NAME")
 
-        class Out:
-            name: str = os.getenv("QUEUE_OUT_NAME")
+class QueueAuthConfig(BaseSettings):
+    model_config = SettingsConfigDict(env_prefix="QUEUE_")
 
-        class Auth:
-            host: str = os.getenv("QUEUE_HOST")
-            port: int = int(os.getenv("QUEUE_PORT"))
-            user: str = os.getenv("QUEUE_USER")
-            password: str = os.getenv("QUEUE_PASSWORD")
+    host: str
+    # Enforce valid port range (non-privileged ports)
+    port: int = Field(ge=1024, le=65535)
+    user: str
+    password: str
+
+
+class QueueConfig(BaseSettings):
+    model_config = SettingsConfigDict(env_prefix="QUEUE_")
+
+    request_timeout: tuple[int, int] = (1, 5)
+    in_name: str
+    out_name: str
+
+    auth: QueueAuthConfig = Field(default_factory=QueueAuthConfig)
+
+
+class SolverConfig(BaseSettings):
+    model_config = SettingsConfigDict(env_prefix="")
+
+    cpu: CpuConfig = Field(default_factory=CpuConfig)
+    queue: QueueConfig = Field(default_factory=QueueConfig)
