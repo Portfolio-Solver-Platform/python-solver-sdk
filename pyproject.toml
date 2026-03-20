@@ -29,7 +29,7 @@ where = ["src"]
 include = ["psp_solver_sdk*"]
 exclude = ["tests*"]
 
-[project.optional-dependencies]
+[dependency-groups]
 dev = [
     "pytest>=8,<9",
     "pytest-cov>=7,<8",
