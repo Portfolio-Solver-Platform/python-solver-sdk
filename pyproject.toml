@@ -33,7 +33,7 @@ exclude = ["tests*"]
 dev = [
     "pytest>=8,<9",
     "pytest-cov>=7,<8",
-    "ruff>=0.13.2,<0.14.0",
+    "ruff>=0.15.14,<0.16.0",
     "bandit>=1.7,<2.0",
     "pip-audit>=2.7,<3.0",
     "pytest-asyncio>=1.2.0,<=2.0"
